@@ -1,15 +1,19 @@
 //@ts-check
 import { StatusBar } from "expo-status-bar";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import { Button } from "react-native";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import React from 'react'
 
-export default function SwipeScreen() {
+export default function SwipeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <CardSwiper></CardSwiper>
+      <CardSwiper navigation={navigation}></CardSwiper>
+
+      
+
+      <StatusBar style="auto"/>
     </View>
   );
 }
@@ -25,8 +29,7 @@ export default function SwipeScreen() {
  *   }
  *   type: string
  *   displayText: string
- *   
- * 
+ *   description: any
  * }} CardData
  * Type definition for a card data object.
  * Subject to change
@@ -54,10 +57,16 @@ const sampleCardsData=[
   }
 ]
 
-function CardSwiper() {
+function CardSwiper( {navigation} ) {
 
   const cardsData = [...sampleCardsData, sampleCardsData[0], sampleCardsData[0], sampleCardsData[0]];
 
+  // const likedItems = [];
+  const [likedItems, setLikedItems] = useState(/** @type { CardData[] } */([]));
+  const dislikedItems = [];
+
+  
+  
   return (
     <Swiper
       cards={cardsData}
@@ -68,8 +77,14 @@ function CardSwiper() {
           />
         );
       }}
-      onSwipedLeft={undefined}
-      onSwipedRight={undefined}
+      onSwipedLeft={(cardIndex) => {
+        dislikedItems.push(cardsData[cardIndex]);
+        console.log("left", cardIndex);
+      }}
+      onSwipedRight={(cardIndex) => {
+        setLikedItems([...likedItems, cardsData[cardIndex]]);
+        console.log("right", cardIndex);
+      }}
       onSwiped={(cardIndex) => {
         console.log(cardIndex);
       }}
@@ -121,13 +136,8 @@ function CardSwiper() {
       }}
 
     >
-      <Button
-        onPress={() => {
-          console.log("oulala");
-        }}
-        title="Press me"
-      >
-      </Button>
+      
+      <CreateOutfit acceptedItems={likedItems} navigation={navigation}/>
     </Swiper>
   );
 }
@@ -220,6 +230,73 @@ function Card({ card }) {
 
       <Text style={styles.text}>{card.displayText}</Text>
       
+    </View>
+  );
+}
+
+function CreateOutfit({acceptedItems, navigation}) {
+
+  const [ready , setReady] = useState(false);
+
+  useEffect(() => {
+    if (acceptedItems.length > 0) {
+      setReady(true);
+    }
+  }, [acceptedItems.length])
+
+  function onPress() {
+    navigation.navigate("Home", {acceptedItems: acceptedItems});
+  }
+
+
+  return (
+    <View
+      style={{
+        position: "absolute",
+        bottom: 20,
+        alignSelf: "center",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {ready ? (
+        <TouchableOpacity
+          onPress={onPress}
+          // title="Press me"
+          style={{
+            backgroundColor: "blue",
+            borderRadius: 5,
+            padding: 10,
+            height: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "50%",
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 16 }}>
+            Create Outfit
+          </Text>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          // title="Press me"
+          style={{
+            backgroundColor: "blue",
+            borderRadius: 5,
+            padding: 10,
+            height: 50,
+            justifyContent: "center",
+            alignItems: "center",
+            width: "50%",
+            opacity: 0.5
+          }}
+        >
+          <Text style={{ color: "white", fontSize: 16 }}>
+            Create Outfit
+          </Text>
+        </TouchableOpacity>
+      )}
     </View>
   );
 }
