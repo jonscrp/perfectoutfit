@@ -1,7 +1,28 @@
 {
-    "outfits": [
+    "bottoms":[
         {
+            "id": 0,
+            "name": "macys black pants 013412",
+            "images":{
+                "front": "",
+                "back": ""
+            },
+
+            "type": "pants",
+            "description": "black pants",
+            "seasons": ["Winter", "Spring", "Summer", "Fall"],
             
+        },
+        {
+            "id": 1,
+            "name": "",
+            "images":{
+                "front": "",
+                "back": ""
+            },
+            "type": "pants",
+            "description": "",
+            "seasons": ["Spring", "Summer"]
         }
     ]
 }
