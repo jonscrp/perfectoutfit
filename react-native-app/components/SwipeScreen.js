@@ -244,7 +244,7 @@ function CreateOutfit({acceptedItems, navigation}) {
   const [ready , setReady] = useState(false);
 
   useEffect(() => {
-    if (acceptedItems.length > 0) {
+    if (acceptedItems.length >= 3) {
       setReady(true);
     }
   }, [acceptedItems.length])

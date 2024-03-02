@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 function generateSelectedOutfits(likedOutfits) {
   return [
@@ -7,8 +7,8 @@ function generateSelectedOutfits(likedOutfits) {
       bottom: likedOutfits[1],
       shoes: likedOutfits[2],
       accessories: null,
-    }
-  ]
+    },
+  ];
 }
 
 export default function OutfitScreen({ route }) {
@@ -16,15 +16,65 @@ export default function OutfitScreen({ route }) {
 
   const selectedOutfits = generateSelectedOutfits(likedOutfits);
 
-  console.log(selectedOutfits);
+  console.log(
+    "selectedOutfits",
+    JSON.stringify(Object.values(selectedOutfits[0]), null, 2)
+  );
 
   return (
     <View style={styles.container}>
-      <Text>Outfits</Text>
+      <Text style={{ fontSize: 24, fontWeight: "bold" }}>Your Outfit:</Text>
+      
 
-      {selectedOutfits.map((item) => (
-        <Text key={item}>{item.displayText}</Text>
-      ))}
+      {Object.values(selectedOutfits[0]).map(
+        (item) =>
+          item !== null && (
+            <View
+              key={item.id}
+              style={{
+                gap: 10,
+              }}
+            >
+              <View
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: 15,
+                  margin: 10,
+                }}
+              >
+                <Text style={{ fontSize: 18, marginLeft: 10 }}>
+                  {item.name}
+                </Text>
+
+
+                <Image
+                  style={{ width: 100, height: 150, resizeMode: "contain" }}
+                  source={{ uri: item.images.front }}
+                />
+              </View>
+            </View>
+          )
+      )}
+      
+      {/* Buy button */}
+      <TouchableOpacity
+        style={{
+          backgroundColor: "blue",
+          padding: 10,
+          borderRadius: 10,
+          margin: 10,
+        }}
+        onPress={() => {
+          Alert.alert("Purchase", "Purchased");
+        }}
+      >
+        <Text style={{ color: "#fff", fontSize: 24, fontWeight: "bold" }}>
+          Buy
+        </Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
