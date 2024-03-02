@@ -1,28 +1,23 @@
 {
     "cards":[
-        {
+        
+         {
             "id": 0,
-            "name": "macys black pants 013412",
+             "name": "",
             "images":{
-                "front": "",
-                "back": ""
+                "front": "front_blackdresspants.png",
+                "back": "back_blackdresspants.png"
             },
 
             "type": "pants",
-            "description": "black pants",
-            "seasons": ["Winter", "Spring", "Summer", "Fall"]
+            "description": "black dress pants"
             
-        },
-        {
-            "id": 1,
-            "name": "",
-            "images":{
-                "front": "",
-                "back": ""
-            },
-            "type": "pants",
-            "description": "",
-            "seasons": ["Spring", "Summer"]
+            
         }
+
+         
+       
+       
+
     ]
 }

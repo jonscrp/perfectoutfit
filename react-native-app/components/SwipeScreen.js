@@ -15,7 +15,7 @@ export default function SwipeScreen() {
 }
 
 
-/**
+/*
  * @typedef {{
  *   id: number|string
  *   name: string
