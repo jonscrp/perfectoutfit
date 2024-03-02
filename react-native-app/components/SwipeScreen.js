@@ -57,9 +57,14 @@ const sampleCardsData=[
   }
 ]
 
-function CardSwiper( {navigation} ) {
+for (let i=1 ; i <= 10; i++) {
+  sampleCardsData.push({...sampleCardsData[0]})
+  sampleCardsData[i].id=i
+}
 
-  const cardsData = [...sampleCardsData, sampleCardsData[0], sampleCardsData[0], sampleCardsData[0]];
+function CardSwiper( {navigation} ) {
+''
+  const cardsData = [...sampleCardsData];
 
   // const likedItems = [];
   const [likedItems, setLikedItems] = useState(/** @type { CardData[] } */([]));
@@ -245,7 +250,7 @@ function CreateOutfit({acceptedItems, navigation}) {
   }, [acceptedItems.length])
 
   function onPress() {
-    navigation.navigate("Home", {acceptedItems: acceptedItems});
+    navigation.navigate("OutfitScreen", {likedOutfits: acceptedItems});
   }
 
 

@@ -7,6 +7,7 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import Home from "./components/Home";
 import SwipeScreen from "./components/SwipeScreen";
+import OutfitScreen from "./components/Outfits";
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,8 @@ export default function App() {
         screenOptions={{ headerShown: false}}>
         <Stack.Screen name="Home" component={Home} />
         <Stack.Screen name="SwipeScreen" component={SwipeScreen} />
+        <Stack.Screen name="OutfitScreen" component={OutfitScreen}/>
+        {/* <Stack.Screen name="CreateOutfit" component={CreateOutfit} /> */}
       </Stack.Navigator>
     </NavigationContainer>
   );
