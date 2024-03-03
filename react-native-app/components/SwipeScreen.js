@@ -1,4 +1,4 @@
-//@ts-check
+
 import { StatusBar } from "expo-status-bar";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import Swiper from "react-native-deck-swiper";
@@ -10,30 +10,13 @@ export default function SwipeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <CardSwiper navigation={navigation}></CardSwiper>
-
-      
-
       <StatusBar style="auto"/>
     </View>
   );
 }
 
 
-/*
- * @typedef {{
- *   id: number|string
- *   name: string
- *   images: {
- *     front: string
- *     back: string
- *   }
- *   type: string
- *   displayText: string
- *   description: any
- * }} CardData
- * Type definition for a card data object.
- * Subject to change
- */
+
 
 const sampleCardsData=[
   {
@@ -67,7 +50,7 @@ function CardSwiper( {navigation} ) {
   const cardsData = [...sampleCardsData];
 
   // const likedItems = [];
-  const [likedItems, setLikedItems] = useState(/** @type { CardData[] } */([]));
+  const [likedItems, setLikedItems] = useState( []);
   const dislikedItems = [];
 
   
@@ -146,64 +129,6 @@ function CardSwiper( {navigation} ) {
     </Swiper>
   );
 }
-
-//chatgpt wrote
-const CardSwiperBad = () => {
-  const [swipeDirection, setSwipeDirection] = useState(null);
-
-  const onSwiping = (x, y) => {
-    if (x > 0) {
-      setSwipeDirection("right");
-    } else if (x < 0) {
-      setSwipeDirection("left");
-    } else {
-      setSwipeDirection(null);
-    }
-  };
-
-  const renderCard = (card, index) => {
-    let cardStyle = {};
-    if (swipeDirection === "right") {
-      cardStyle = { backgroundColor: "rgba(0, 255, 0, 0.5)" }; // Green for right swipe
-    } else if (swipeDirection === "left") {
-      cardStyle = { backgroundColor: "rgba(255, 0, 0, 0.5)" }; // Red for left swipe
-    }
-
-    return (
-      <View style={[styles.card, cardStyle]}>
-        <Text style={styles.text}>{card}</Text>
-      </View>
-    );
-  };
-
-  return (
-    <Swiper
-      cards={["Card 1", "Card 2", "Card 3", "Card 4", "Card 5"]}
-      renderCard={renderCard}
-      onSwiping={onSwiping}
-      overlayLabels={{
-        left: {
-          title: "NOPE",
-          style: {
-            label: {
-              backgroundColor: "red",
-              color: "white",
-            },
-          },
-        },
-        right: {
-          title: "LIKE",
-          style: {
-            label: {
-              backgroundColor: "green",
-              color: "white",
-            },
-          },
-        },
-      }}
-    />
-  );
-};
 
 
 

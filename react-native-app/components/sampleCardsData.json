@@ -1,23 +1,136 @@
 {
-    "cards":[
-        
-         {
-            "id": 0,
-             "name": "",
-            "images":{
-                "front": "front_blackdresspants.png",
-                "back": "back_blackdresspants.png"
-            },
-
-            "type": "pants",
-            "description": "black dress pants"
-            
-            
+    "data": [
+        {
+            "gender": "male",
+            "categories": [
+                {
+                    "category": "accesories",
+                    "images": [
+                        "male_accesories_001.png",
+                        "male_accesories_002.png",
+                        "male_accesories_003.png",
+                        "male_accesories_004.png",
+                        "male_accesories_005.png",
+                        "male_accesories_006.png",
+                        "male_accesories_007.png",
+                        "male_accesories_008.png"
+                    ]
+                },
+                {
+                    "category": "bottoms",
+                    "images": [
+                        "male_bottoms_001.png",
+                        "male_bottoms_0010.png",
+                        "male_bottoms_0011.png",
+                        "male_bottoms_0012.png",
+                        "male_bottoms_0013.png",
+                        "male_bottoms_0014.png",
+                        "male_bottoms_002.png",
+                        "male_bottoms_003.png",
+                        "male_bottoms_004.png",
+                        "male_bottoms_005.png",
+                        "male_bottoms_006.png",
+                        "male_bottoms_007.png",
+                        "male_bottoms_008.png",
+                        "male_bottoms_009.png"
+                    ]
+                },
+                {
+                    "category": "shoes",
+                    "images": [
+                        "male_shoes_001.png",
+                        "male_shoes_002.png",
+                        "male_shoes_003.png",
+                        "male_shoes_004.png",
+                        "male_shoes_005.png"
+                    ]
+                },
+                {
+                    "category": "tops",
+                    "images": [
+                        "male_tops_001.png",
+                        "male_tops_0010.png",
+                        "male_tops_0011.png",
+                        "male_tops_0012.png",
+                        "male_tops_0013.png",
+                        "male_tops_0014.png",
+                        "male_tops_002.png",
+                        "male_tops_003.png",
+                        "male_tops_004.png",
+                        "male_tops_005.png",
+                        "male_tops_006.png",
+                        "male_tops_007.png",
+                        "male_tops_008.png",
+                        "male_tops_009.png"
+                    ]
+                }
+            ]
+        },
+        {
+            "gender": "female",
+            "categories": [
+                {
+                    "category": "accesories",
+                    "images": [
+                        "female_accesories_001.png"
+                    ]
+                },
+                {
+                    "category": "bottoms",
+                    "images": [
+                        "female_bottoms_001.png",
+                        "female_bottoms_0010.png",
+                        "female_bottoms_0011.png",
+                        "female_bottoms_0012.png",
+                        "female_bottoms_0013.png",
+                        "female_bottoms_002.png",
+                        "female_bottoms_003.png",
+                        "female_bottoms_004.png",
+                        "female_bottoms_005.png",
+                        "female_bottoms_006.png",
+                        "female_bottoms_007.png",
+                        "female_bottoms_008.png",
+                        "female_bottoms_009.png"
+                    ]
+                },
+                {
+                    "category": "shoes",
+                    "images": []
+                },
+                {
+                    "category": "tops",
+                    "images": [
+                        "female_tops_001.png",
+                        "female_tops_0010.png",
+                        "female_tops_0011.png",
+                        "female_tops_0012.png",
+                        "female_tops_0013.png",
+                        "female_tops_0014.png",
+                        "female_tops_0015.png",
+                        "female_tops_0016.png",
+                        "female_tops_0017.png",
+                        "female_tops_0018.png",
+                        "female_tops_0019.png",
+                        "female_tops_002.png",
+                        "female_tops_0020.png",
+                        "female_tops_0021.png",
+                        "female_tops_0022.png",
+                        "female_tops_0023.png",
+                        "female_tops_0024.png",
+                        "female_tops_0025.png",
+                        "female_tops_0026.png",
+                        "female_tops_0027.png",
+                        "female_tops_0028.png",
+                        "female_tops_003.png",
+                        "female_tops_004.png",
+                        "female_tops_005.png",
+                        "female_tops_006.png",
+                        "female_tops_007.png",
+                        "female_tops_008.png",
+                        "female_tops_009.png"
+                    ]
+                }
+            ]
         }
-
-         
-       
-       
-
     ]
 }
