@@ -26,6 +26,17 @@ export default function Home({ navigation }) {
       >
         <Text style={styles.buttonText}>Start Female</Text>
       </TouchableOpacity>
+
+
+      <TouchableOpacity
+        style={{...styles.button, backgroundColor: "#22c55e"}}
+        onPress={() => {
+          // navigation.navigate("MatchedOutfitsScreen")
+          
+        }}
+      >
+        <Text style={styles.buttonText}>Your Outfits</Text>
+      </TouchableOpacity>
     </View>
   );
 }

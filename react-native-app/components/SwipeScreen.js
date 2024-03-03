@@ -1,78 +1,147 @@
-
 import { StatusBar } from "expo-status-bar";
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Swiper from "react-native-deck-swiper";
 import { Button } from "react-native";
 import { useEffect, useState } from "react";
-import React from 'react'
+import React from "react";
 import { clothingItemsData } from "./clothingItemsData";
 
 export default function SwipeScreen({ navigation, route }) {
-
   const gender = route.params?.gender || "male";
 
-  const cardsData = clothingItemsData.filter( (item) => item.gender === gender).sort( () => 0.5 - Math.random() );
-  
-
+  const cardsData = clothingItemsData
+    .filter((item) => item.gender === gender)
+    .sort(() => 0.5 - Math.random());
 
   return (
     <View style={styles.container}>
-      <ItemsCardSwiper navigation={navigation} cardsData={cardsData}></ItemsCardSwiper>
-      <StatusBar style="auto"/>
+      <ItemsCardSwiper
+        navigation={navigation}
+        cardsData={cardsData}
+      ></ItemsCardSwiper>
+      <StatusBar style="auto" />
     </View>
   );
 }
 
 export function OutfitSwipeScreen({ route, navigation }) {
-
   const likedItems = route.params.likedItems;
   const selectedOutfits = generateOutfitsFromLikedClothingItems(likedItems);
 
   return (
-    <View style={{...styles.container, backgroundColor: "limegreen"}}>
+    <View style={{ ...styles.container, backgroundColor: "limegreen" }}>
       {/* <Text style={{ fontSize: 24, fontWeight: "bold" }}>Your Outfits:</Text> */}
-      <OutfitsCardSwiper navigation={navigation} cardsData={selectedOutfits}></OutfitsCardSwiper>
-      <StatusBar style="auto"/>
+      <OutfitsCardSwiper
+        navigation={navigation}
+        cardsData={selectedOutfits}
+      ></OutfitsCardSwiper>
+      <StatusBar style="auto" />
     </View>
-  )
+  );
 }
 
 export function MatchedOutfitsScreen({ route, navigation }) {
-  
   const likedItems = route.params.likedItems;
+
+
   
+
+  // console.log("likedItems", likedItems)
+
   return (
     <View style={styles.container}>
-      <Text>Matched Outfits</Text>
-      {likedItems.map((item) => (
-        <Text key={item.id}>{item.displayText}</Text>
-      ))}
-      <StatusBar style="auto"/>
+      <Text></Text>
+      <Text></Text>
+      <Text></Text>
+      <Text></Text>
+      <ScrollView>
+      <Text style={{ fontSize: 24, fontWeight: "bold" }}>Your Outfits:</Text>
+
+      <Text></Text>
+        <View style={{ gap: 20 }}>
+          {likedItems.map((outfit) => (
+            <View key={outfit[0].id * outfit[1].id * outfit[2].id} style={{
+              backgroundColor: "orange",
+              padding: 10,
+              borderRadius: 10
+            }}>
+              <View
+                style={{
+                  flexDirection: "row",
+                  gap:4
+                }}
+              >
+                {/* <Text>{JSON.stringify(outfit, null, 2)}</Text> */}
+                {outfit.map((item) => (
+                  <Image
+                    key={item.id}
+                    style={{
+                      width: 90,
+                      height: 150,
+                      resizeMode: "contain",
+                      backgroundColor: "#f5f5f5",
+                    }}
+                    source={item.imagePath}
+                  />
+                ))}
+              </View>
+
+              <BuyButton />
+            </View>
+          ))}
+        </View>
+      </ScrollView>
     </View>
+  );
+}
+
+function BuyButton(){
+  function onPress(){
+
+  }
+
+  return (
+    <TouchableOpacity 
+      style={{ 
+        backgroundColor: "blue", borderRadius: 5, padding: 10,
+        width: 70, marginLeft:"auto", marginTop:20
+      }}
+      onPress={onPress}
+    >
+      <Text style={{ color: "white", textAlign: "center"}}>Buy</Text>
+    </TouchableOpacity>
   )
 }
 
-function isReadyForCreateOutfit(acceptedItems){
+function isReadyForCreateOutfit(acceptedItems) {
   // accepted items contains  at least 2 tops and 2 bottoms
 
   // console.log("acceptedItems", acceptedItems);
   // console.log("a", acceptedItems.filter( (item) => item.category === "tops"));
 
-  return acceptedItems.filter( (item) => item.category === "tops").length >= 1 
-    && acceptedItems.filter( (item) => item.category === "bottoms").length >= 1
-    && acceptedItems.filter( (item) => item.category === "shoes").length >= 1;
-
+  return (
+    acceptedItems.filter((item) => item.category === "tops").length >= 1 &&
+    acceptedItems.filter((item) => item.category === "bottoms").length >= 1 &&
+    acceptedItems.filter((item) => item.category === "shoes").length >= 1
+  );
 }
 
 function generateOutfitsFromLikedClothingItems(likedItems) {
-  
-  const tops = likedItems.filter( (item) => item.category === "tops");
-  const bottoms = likedItems.filter( (item) => item.category === "bottoms");
-  const shoes = likedItems.filter( (item) => item.category === "shoes");
-  const accessories = likedItems.filter( (item) => item.category === "accesories");
+  const tops = likedItems.filter((item) => item.category === "tops");
+  const bottoms = likedItems.filter((item) => item.category === "bottoms");
+  const shoes = likedItems.filter((item) => item.category === "shoes");
+  const accessories = likedItems.filter(
+    (item) => item.category === "accesories"
+  );
 
-  
-  const out = []
+  const out = [];
   for (const top of tops) {
     for (const bottom of bottoms) {
       for (const shoe of shoes) {
@@ -84,28 +153,23 @@ function generateOutfitsFromLikedClothingItems(likedItems) {
     }
   }
 
-  console.log(JSON.stringify(out, null, 2))
+  console.log(JSON.stringify(out, null, 2));
   shuffleArray(out);
-  
-  
 
-  return out
+  return out;
 }
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
     // Generate a random index from 0 to i
-    let j = Math.floor(Math.random() * (i + 1)); 
+    let j = Math.floor(Math.random() * (i + 1));
     // Swap elements at indices i and j
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
 }
 
-
-function ItemsCardSwiper( {navigation, cardsData} ) {
-
-
+function ItemsCardSwiper({ navigation, cardsData }) {
   return (
     <CardSwiper
       cardsData={cardsData}
@@ -113,8 +177,8 @@ function ItemsCardSwiper( {navigation, cardsData} ) {
       NextButtonComponent={CreateOutfitsButton}
       navigation={navigation}
     />
-  )
-  
+  );
+
   // return (
   //   <Swiper
   //     cards={cardsData}
@@ -143,7 +207,7 @@ function ItemsCardSwiper( {navigation, cardsData} ) {
   //     backgroundColor={"#4FD0E9"}
   //     stackSize={3}
   //     verticalSwipe={false}
-      
+
   //     overlayLabels={{
   //       left: {
   //         title: 'NOPE',
@@ -184,25 +248,26 @@ function ItemsCardSwiper( {navigation, cardsData} ) {
   //     }}
 
   //   >
-      
+
   //     <CreateOutfitButton acceptedItems={likedItems} navigation={navigation}/>
   //   </Swiper>
   // );
 }
 
-function CardSwiper({cardsData, CardComponent, NextButtonComponent, navigation, backgroundColor="#4FD0E9"}) {
-  
-  const [likedItems, setLikedItems] = useState( []);
+function CardSwiper({
+  cardsData,
+  CardComponent,
+  NextButtonComponent,
+  navigation,
+  backgroundColor = "#4FD0E9",
+}) {
+  const [likedItems, setLikedItems] = useState([]);
   const dislikedItems = [];
   return (
     <Swiper
       cards={cardsData}
       renderCard={(card) => {
-        return (
-          <CardComponent 
-            card={card} 
-          />
-        );
+        return <CardComponent card={card} />;
       }}
       onSwipedLeft={(cardIndex) => {
         dislikedItems.push(cardsData[cardIndex]);
@@ -210,8 +275,7 @@ function CardSwiper({cardsData, CardComponent, NextButtonComponent, navigation, 
       onSwipedRight={(cardIndex) => {
         setLikedItems([...likedItems, cardsData[cardIndex]]);
       }}
-      onSwiped={(cardIndex) => {
-      }}
+      onSwiped={(cardIndex) => {}}
       onSwipedAll={() => {
         console.log("onSwipedAll");
       }}
@@ -219,52 +283,49 @@ function CardSwiper({cardsData, CardComponent, NextButtonComponent, navigation, 
       backgroundColor={backgroundColor}
       stackSize={3}
       verticalSwipe={false}
-      
       overlayLabels={{
         left: {
-          title: 'NOPE',
+          title: "NOPE",
           style: {
             label: {
-              backgroundColor: 'red',
-              borderColor: 'red',
-              color: 'white',
-              borderWidth: 1
+              backgroundColor: "red",
+              borderColor: "red",
+              color: "white",
+              borderWidth: 1,
             },
             wrapper: {
-              flexDirection: 'column',
-              alignItems: 'flex-end',
-              justifyContent: 'flex-start',
+              flexDirection: "column",
+              alignItems: "flex-end",
+              justifyContent: "flex-start",
               marginTop: 30,
-              marginLeft: -30
-            }
-          }
+              marginLeft: -30,
+            },
+          },
         },
         right: {
-          title: 'LIKE',
+          title: "LIKE",
           style: {
             label: {
-              backgroundColor: 'green',
-              borderColor: 'green',
-              color: 'white',
-              borderWidth: 1
+              backgroundColor: "green",
+              borderColor: "green",
+              color: "white",
+              borderWidth: 1,
             },
             wrapper: {
-              flexDirection: 'column',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
+              flexDirection: "column",
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
               marginTop: 30,
-              marginLeft: 30
-            }
-          }
+              marginLeft: 30,
+            },
+          },
         },
       }}
-
     >
-      <NextButtonComponent acceptedItems={likedItems} navigation={navigation}/>
+      <NextButtonComponent acceptedItems={likedItems} navigation={navigation} />
     </Swiper>
   );
 }
-
 
 /**
  * Component to render a card.
@@ -273,13 +334,15 @@ function CardSwiper({cardsData, CardComponent, NextButtonComponent, navigation, 
  * @returns {JSX.Element}
  */
 function ClothingItemCard({ card }) {
-  let cardURI = card["imagePath"]
+  let cardURI = card["imagePath"];
   return (
     <View style={styles.card}>
-      <View style={{
-        alignItems: "center",
-        justifyContent: "center",
-      }}>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
         <Image
           style={{
             width: "75%",
@@ -292,26 +355,23 @@ function ClothingItemCard({ card }) {
       </View>
 
       <Text style={styles.text}>{card.displayText}</Text>
-      
-    </View> 
+    </View>
   );
 }
 
-function CreateOutfitsButton({acceptedItems, navigation}) {
-
-  const [ready , setReady] = useState(false);
+function CreateOutfitsButton({ acceptedItems, navigation }) {
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (isReadyForCreateOutfit(acceptedItems)) {
       setReady(true);
     }
-  }, [acceptedItems.length])
+  }, [acceptedItems.length]);
 
   function onPress() {
-    console.log("HIIIIIII")
-    navigation.navigate("OutfitSwipeScreen", {likedItems: acceptedItems});
+    console.log("HIIIIIII");
+    navigation.navigate("OutfitSwipeScreen", { likedItems: acceptedItems });
   }
-
 
   return (
     <View
@@ -338,9 +398,7 @@ function CreateOutfitsButton({acceptedItems, navigation}) {
             width: "50%",
           }}
         >
-          <Text style={{ color: "white", fontSize: 16 }}>
-            Create Outfits
-          </Text>
+          <Text style={{ color: "white", fontSize: 16 }}>Create Outfits</Text>
         </TouchableOpacity>
       ) : (
         <TouchableOpacity
@@ -353,23 +411,17 @@ function CreateOutfitsButton({acceptedItems, navigation}) {
             justifyContent: "center",
             alignItems: "center",
             width: "50%",
-            opacity: 0.5
+            opacity: 0.5,
           }}
         >
-          <Text style={{ color: "white", fontSize: 16 }}>
-            Create Outfits
-          </Text>
+          <Text style={{ color: "white", fontSize: 16 }}>Create Outfits</Text>
         </TouchableOpacity>
       )}
     </View>
   );
 }
 
-
-
-
-
-function OutfitsCardSwiper({navigation, cardsData}) {
+function OutfitsCardSwiper({ navigation, cardsData }) {
   return (
     <CardSwiper
       cardsData={cardsData}
@@ -381,74 +433,79 @@ function OutfitsCardSwiper({navigation, cardsData}) {
   );
 }
 
-function OutfitCard( { card } ) {
+function OutfitCard({ card }) {
   console.log("Card", card);
 
-  const accessory = card.filter( (item) => item.category === "accesories")[0];
-  const top = card.filter( (item) => item.category === "tops")[0];
-  const bottom = card.filter( (item) => item.category === "bottoms")[0];
-  const shoe = card.filter( (item) => item.category === "shoes")[0];
+  const accessory = card.filter((item) => item.category === "accesories")[0];
+  const top = card.filter((item) => item.category === "tops")[0];
+  const bottom = card.filter((item) => item.category === "bottoms")[0];
+  const shoe = card.filter((item) => item.category === "shoes")[0];
 
   return (
-    <View style={{...styles.card, marginRight:10}}>
-      <View style={{
-        alignItems: "center",
-        justifyContent: "center",
-        flex: 1,
-        flexDirection: "column",
-        gap: 10,
-      }}>
-        {/* <Text style={styles.text}> Outfit: </Text> */}
-        
-        <View style={{
-          flexDirection: "row", 
+    <View style={{ ...styles.card, marginRight: 10 }}>
+      <View
+        style={{
+          alignItems: "center",
+          justifyContent: "center",
+          flex: 1,
+          flexDirection: "column",
           gap: 10,
-          justifyContent: "space-evenly",
-        }}>
-          <ImageForOutfitCard item={top}/>
-          <ImageForOutfitCard item={bottom}/>
+        }}
+      >
+        {/* <Text style={styles.text}> Outfit: </Text> */}
+
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
+            justifyContent: "space-evenly",
+          }}
+        >
+          <ImageForOutfitCard item={top} />
+          <ImageForOutfitCard item={bottom} />
         </View>
 
-        <View style={{
-          flexDirection: "row", 
-          gap: 10,
-          justifyContent: "space-evenly",
-        }}>
-          {accessory && <ImageForOutfitCard item={accessory}/>}
-          <ImageForOutfitCard item={shoe}/>
+        <View
+          style={{
+            flexDirection: "row",
+            gap: 10,
+            justifyContent: "space-evenly",
+          }}
+        >
+          {accessory && <ImageForOutfitCard item={accessory} />}
+          <ImageForOutfitCard item={shoe} />
         </View>
       </View>
-    </View> 
+    </View>
   );
 }
 
-function ImageForOutfitCard({item}){
+function ImageForOutfitCard({ item }) {
   return (
-    <Image 
-        key={item.id}
-        style={{
-          width: 170, 
-          height: 250,
-          resizeMode: "contain",
-          backgroundColor: "#f5f5f5",
-        }}
-        source={item.imagePath}
-      />
-  )
+    <Image
+      key={item.id}
+      style={{
+        width: 170,
+        height: 250,
+        resizeMode: "contain",
+        backgroundColor: "#f5f5f5",
+      }}
+      source={item.imagePath}
+    />
+  );
 }
 
-
-function SeeMatchesButton({acceptedItems, navigation}) {
-  const [ready , setReady] = useState(false);
+function SeeMatchesButton({ acceptedItems, navigation }) {
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (acceptedItems.length >= 1) {
       setReady(true);
     }
-  }, [acceptedItems.length])
+  }, [acceptedItems.length]);
 
   function onPress() {
-    navigation.navigate("MatchedOutfitsScreen", {likedItems: acceptedItems});
+    navigation.navigate("MatchedOutfitsScreen", { likedItems: acceptedItems });
   }
 
   return (
@@ -475,17 +532,11 @@ function SeeMatchesButton({acceptedItems, navigation}) {
           width: "50%",
         }}
       >
-        <Text style={{ color: "white", fontSize: 16 }}>
-          See Matches
-        </Text>
+        <Text style={{ color: "white", fontSize: 16 }}>See Matches</Text>
       </TouchableOpacity>
     </View>
   );
 }
-
-
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -508,5 +559,4 @@ const styles = StyleSheet.create({
     fontSize: 24,
     backgroundColor: "transparent",
   },
-
 });
