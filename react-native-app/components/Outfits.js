@@ -1,17 +1,18 @@
 import { Alert, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-function generateSelectedOutfits(likedOutfits) {
+function generateSelectedOutfits(likedItems) {
   return [
     {
-      top: likedOutfits[0],
-      bottom: likedOutfits[1],
-      shoes: likedOutfits[2],
+      top: likedItems[0],
+      bottom: likedItems[1],
+      shoes: likedItems[2],
       accessories: null,
     },
   ];
 }
 
-export default function OutfitScreen({ route }) {
+
+export  function OutfitScreenOld({ route }) {
   const likedOutfits = route.params.likedOutfits;
 
   const selectedOutfits = generateSelectedOutfits(likedOutfits);
