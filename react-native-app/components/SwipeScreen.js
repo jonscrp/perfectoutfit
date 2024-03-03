@@ -9,12 +9,45 @@ import React from 'react'
 export default function SwipeScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <CardSwiper navigation={navigation}></CardSwiper>
+      <ItemsCardSwiper navigation={navigation}></ItemsCardSwiper>
       <StatusBar style="auto"/>
     </View>
   );
 }
 
+export function OutfitSwipeScreen({ route, navigation }) {
+
+  const likedItems = route.params.likedItems;
+  const selectedOutfits = generateOutfitsFrom(likedItems);
+
+  return (
+    <View style={{...styles.container, backgroundColor: "limegreen"}}>
+      {/* <Text style={{ fontSize: 24, fontWeight: "bold" }}>Your Outfits:</Text> */}
+      <OutfitsCardSwiper navigation={navigation} cardsData={selectedOutfits}></OutfitsCardSwiper>
+      <StatusBar style="auto"/>
+    </View>
+  )
+}
+
+export function MatchedOutfitsScreen({ route, navigation }) {
+  
+  const likedItems = route.params.likedItems;
+  
+  return (
+    <View style={styles.container}>
+      <Text>Matched Outfits</Text>
+      {likedItems.map((item) => (
+        <Text key={item.id}>{item.displayText}</Text>
+      ))}
+      <StatusBar style="auto"/>
+    </View>
+  )
+}
+
+
+function generateOutfitsFrom(likedItems) {
+  return likedItems;
+}
 
 
 
@@ -39,30 +72,111 @@ const sampleCardsData=[
     }
   }
 ]
-
 for (let i=1 ; i <= 10; i++) {
   sampleCardsData.push({...sampleCardsData[0]})
   sampleCardsData[i].id=i
 }
 
-function CardSwiper( {navigation} ) {
-''
+
+
+function ItemsCardSwiper( {navigation} ) {
+
   const cardsData = [...sampleCardsData];
 
-  // const likedItems = [];
+  return (
+    <CardSwiper
+      cardsData={cardsData}
+      CardComponent={ClothingItemCard}
+      NextButtonComponent={CreateOutfitsButton}
+      navigation={navigation}
+    />
+  )
+  
+  // return (
+  //   <Swiper
+  //     cards={cardsData}
+  //     renderCard={(card) => {
+  //       return (
+  //         <Card
+  //           card={card}
+  //         />
+  //       );
+  //     }}
+  //     onSwipedLeft={(cardIndex) => {
+  //       dislikedItems.push(cardsData[cardIndex]);
+  //       console.log("left", cardIndex);
+  //     }}
+  //     onSwipedRight={(cardIndex) => {
+  //       setLikedItems([...likedItems, cardsData[cardIndex]]);
+  //       console.log("right", cardIndex);
+  //     }}
+  //     onSwiped={(cardIndex) => {
+  //       console.log(cardIndex);
+  //     }}
+  //     onSwipedAll={() => {
+  //       console.log("onSwipedAll");
+  //     }}
+  //     cardIndex={0}
+  //     backgroundColor={"#4FD0E9"}
+  //     stackSize={3}
+  //     verticalSwipe={false}
+      
+  //     overlayLabels={{
+  //       left: {
+  //         title: 'NOPE',
+  //         style: {
+  //           label: {
+  //             backgroundColor: 'red',
+  //             borderColor: 'red',
+  //             color: 'white',
+  //             borderWidth: 1
+  //           },
+  //           wrapper: {
+  //             flexDirection: 'column',
+  //             alignItems: 'flex-end',
+  //             justifyContent: 'flex-start',
+  //             marginTop: 30,
+  //             marginLeft: -30
+  //           }
+  //         }
+  //       },
+  //       right: {
+  //         title: 'LIKE',
+  //         style: {
+  //           label: {
+  //             backgroundColor: 'green',
+  //             borderColor: 'green',
+  //             color: 'white',
+  //             borderWidth: 1
+  //           },
+  //           wrapper: {
+  //             flexDirection: 'column',
+  //             alignItems: 'flex-start',
+  //             justifyContent: 'flex-start',
+  //             marginTop: 30,
+  //             marginLeft: 30
+  //           }
+  //         }
+  //       },
+  //     }}
+
+  //   >
+      
+  //     <CreateOutfitButton acceptedItems={likedItems} navigation={navigation}/>
+  //   </Swiper>
+  // );
+}
+
+function CardSwiper({cardsData, CardComponent, NextButtonComponent, navigation, backgroundColor="#4FD0E9"}) {
+  
   const [likedItems, setLikedItems] = useState( []);
   const dislikedItems = [];
-
-  
-  
   return (
     <Swiper
       cards={cardsData}
       renderCard={(card) => {
         return (
-          <Card
-            card={card}
-          />
+          <CardComponent card={card} />
         );
       }}
       onSwipedLeft={(cardIndex) => {
@@ -80,7 +194,7 @@ function CardSwiper( {navigation} ) {
         console.log("onSwipedAll");
       }}
       cardIndex={0}
-      backgroundColor={"#4FD0E9"}
+      backgroundColor={backgroundColor}
       stackSize={3}
       verticalSwipe={false}
       
@@ -124,12 +238,10 @@ function CardSwiper( {navigation} ) {
       }}
 
     >
-      
-      <CreateOutfit acceptedItems={likedItems} navigation={navigation}/>
+      <NextButtonComponent acceptedItems={likedItems} navigation={navigation}/>
     </Swiper>
   );
 }
-
 
 
 /**
@@ -138,7 +250,7 @@ function CardSwiper( {navigation} ) {
  * @param {CardData} props.card - Card text
  * @returns {JSX.Element}
  */
-function Card({ card }) {
+function ClothingItemCard({ card }) {
   return (
     <View style={styles.card}>
       <View style={{
@@ -160,11 +272,11 @@ function Card({ card }) {
 
       <Text style={styles.text}>{card.displayText}</Text>
       
-    </View>
+    </View> 
   );
 }
 
-function CreateOutfit({acceptedItems, navigation}) {
+function CreateOutfitsButton({acceptedItems, navigation}) {
 
   const [ready , setReady] = useState(false);
 
@@ -175,7 +287,8 @@ function CreateOutfit({acceptedItems, navigation}) {
   }, [acceptedItems.length])
 
   function onPress() {
-    navigation.navigate("OutfitScreen", {likedOutfits: acceptedItems});
+    console.log("HIIIIIII")
+    navigation.navigate("OutfitSwipeScreen", {likedItems: acceptedItems});
   }
 
 
@@ -205,7 +318,7 @@ function CreateOutfit({acceptedItems, navigation}) {
           }}
         >
           <Text style={{ color: "white", fontSize: 16 }}>
-            Create Outfit
+            Create Outfits
           </Text>
         </TouchableOpacity>
       ) : (
@@ -223,13 +336,90 @@ function CreateOutfit({acceptedItems, navigation}) {
           }}
         >
           <Text style={{ color: "white", fontSize: 16 }}>
-            Create Outfit
+            Create Outfits
           </Text>
         </TouchableOpacity>
       )}
     </View>
   );
 }
+
+
+
+
+
+function OutfitsCardSwiper({navigation, cardsData}) {
+  return (
+    <CardSwiper
+      cardsData={cardsData}
+      CardComponent={OutfitCard}
+      NextButtonComponent={SeeMatchesButton}
+      navigation={navigation}
+      backgroundColor="limegreen"
+    />
+  );
+}
+
+function OutfitCard( { card } ) {
+  return (
+    <View style={styles.card}>
+      <View style={{
+        alignItems: "center",
+        justifyContent: "center",
+      }}>
+        <Text style={styles.text}>{card.displayText}</Text>
+      </View>
+    </View> 
+  );
+}
+
+function SeeMatchesButton({acceptedItems, navigation}) {
+  const [ready , setReady] = useState(false);
+
+  useEffect(() => {
+    if (acceptedItems.length >= 1) {
+      setReady(true);
+    }
+  }, [acceptedItems.length])
+
+  function onPress() {
+    navigation.navigate("MatchedOutfitsScreen", {likedItems: acceptedItems});
+  }
+
+  return (
+    <View
+      style={{
+        position: "absolute",
+        bottom: 20,
+        alignSelf: "center",
+        width: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      <TouchableOpacity
+        // title="Press me"
+        onPress={onPress}
+        style={{
+          backgroundColor: "blue",
+          borderRadius: 5,
+          padding: 10,
+          height: 50,
+          justifyContent: "center",
+          alignItems: "center",
+          width: "50%",
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 16 }}>
+          See Matches
+        </Text>
+      </TouchableOpacity>
+    </View>
+  );
+}
+
+
+
 
 
 const styles = StyleSheet.create({
