@@ -1,11 +1,11 @@
-const dataItem  = require ("data.json");
+const jsonData  = require ("C:/Users/jsuco/OneDrive/Desktop/Hackathons/perfectoutfit/react-native-app/components/sampleCardsData.json");
 
 
 
 
 
 // // genders 2
-console.log(dataItem.data);
+console.log(jsonData.data.length);
 // console.log(jsonData.data[0].gender);
 // console.log(jsonData.data[1].gender);
 
@@ -17,7 +17,7 @@ console.log(dataItem.data);
 
 // console.log(jsonData.data[0].categories[0].images[0])
 
-/*
+
 
 console.log(dataItems());
 
@@ -36,7 +36,7 @@ function dataItems(){
                     id: uniqueIndex,
                     gender: jsonData.data[genderIndex].gender,
                     category: jsonData.data[genderIndex].categories[categoryIndex].category,
-                    imagePath:  jsonData.data[genderIndex].categories[categoryIndex].images[imageIndex]
+                    imagePath:  `${jsonData.data[genderIndex].gender}/${jsonData.data[genderIndex].categories[categoryIndex].category}/${jsonData.data[genderIndex].categories[categoryIndex].images[imageIndex]}`
                 });
                 uniqueIndex++;
             }
@@ -54,14 +54,3 @@ function dataItems(){
 
 
 
-//function gettingItems(){
-    
-  //   data : jsonData.data;
-
-
-     
-    //}
-
-//}
-
-*/

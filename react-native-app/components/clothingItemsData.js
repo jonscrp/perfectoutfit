@@ -1,4 +1,4 @@
-import jsonData from 'data.js'
+import itemdata from 'data.js'
 
 const sampleCardsData=[
     {
@@ -26,6 +26,5 @@ const sampleCardsData=[
     sampleCardsData[i].id=i
   }
 
-export const clothingItemsData = [
-   return 
-]
+  
+export const clothingItemsData = dataitem.data;
