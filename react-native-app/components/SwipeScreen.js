@@ -51,11 +51,6 @@ function generateOutfitsFromLikedClothingItems(likedItems) {
 }
 
 
-
-
-
-
-
 function ItemsCardSwiper( {navigation} ) {
 
   const cardsData = clothingItemsData;
@@ -153,7 +148,9 @@ function CardSwiper({cardsData, CardComponent, NextButtonComponent, navigation, 
       cards={cardsData}
       renderCard={(card) => {
         return (
-          <CardComponent card={card} />
+          <CardComponent 
+            card={card} 
+          />
         );
       }}
       onSwipedLeft={(cardIndex) => {
@@ -228,6 +225,7 @@ function CardSwiper({cardsData, CardComponent, NextButtonComponent, navigation, 
  * @returns {JSX.Element}
  */
 function ClothingItemCard({ card }) {
+  let cardURI = card["imagePath"]
   return (
     <View style={styles.card}>
       <View style={{
@@ -241,9 +239,7 @@ function ClothingItemCard({ card }) {
             aspectRatio: 1,
             resizeMode: "contain",
           }}
-          source={{
-            uri:  card.images.front,
-          }}
+          source={cardURI}
         />
       </View>
 
