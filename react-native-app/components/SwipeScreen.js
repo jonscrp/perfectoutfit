@@ -69,7 +69,7 @@ function generateOutfitsFromLikedClothingItems(likedItems) {
   const tops = likedItems.filter( (item) => item.category === "tops");
   const bottoms = likedItems.filter( (item) => item.category === "bottoms");
   const shoes = likedItems.filter( (item) => item.category === "shoes");
-  const accessories = likedItems.filter( (item) => item.category === "accessories");
+  const accessories = likedItems.filter( (item) => item.category === "accesories");
 
   
   const out = []
@@ -78,15 +78,28 @@ function generateOutfitsFromLikedClothingItems(likedItems) {
       for (const shoe of shoes) {
         out.push([top, bottom, shoe]);
         for (const accessory of accessories) {
-          out.push([top, bottom, shoe, accessory]);
+          out.push([accessory, top, bottom, shoe]);
         }
       }
     }
   }
-  
 
   console.log(JSON.stringify(out, null, 2))
+  shuffleArray(out);
+  
+  
+
   return out
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    // Generate a random index from 0 to i
+    let j = Math.floor(Math.random() * (i + 1)); 
+    // Swap elements at indices i and j
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
 }
 
 
@@ -370,30 +383,60 @@ function OutfitsCardSwiper({navigation, cardsData}) {
 
 function OutfitCard( { card } ) {
   console.log("Card", card);
+
+  const accessory = card.filter( (item) => item.category === "accesories")[0];
+  const top = card.filter( (item) => item.category === "tops")[0];
+  const bottom = card.filter( (item) => item.category === "bottoms")[0];
+  const shoe = card.filter( (item) => item.category === "shoes")[0];
+
   return (
-    <View style={styles.card}>
+    <View style={{...styles.card, marginRight:10}}>
       <View style={{
         alignItems: "center",
         justifyContent: "center",
         flex: 1,
-        flexDirection: "column"
+        flexDirection: "column",
+        gap: 10,
       }}>
-        <Text style={styles.text}> Outfit: </Text>
-        {card.forEach((item) => {
-          <Image
-            style={{
-              width: "75%",
-              height: "75%",
-              aspectRatio: 1,
-              resizeMode: "contain",
-            }}
-            source={item.imagePath}
-          />
-        })}
+        {/* <Text style={styles.text}> Outfit: </Text> */}
+        
+        <View style={{
+          flexDirection: "row", 
+          gap: 10,
+          justifyContent: "space-evenly",
+        }}>
+          <ImageForOutfitCard item={top}/>
+          <ImageForOutfitCard item={bottom}/>
+        </View>
+
+        <View style={{
+          flexDirection: "row", 
+          gap: 10,
+          justifyContent: "space-evenly",
+        }}>
+          {accessory && <ImageForOutfitCard item={accessory}/>}
+          <ImageForOutfitCard item={shoe}/>
+        </View>
       </View>
     </View> 
   );
 }
+
+function ImageForOutfitCard({item}){
+  return (
+    <Image 
+        key={item.id}
+        style={{
+          width: 170, 
+          height: 250,
+          resizeMode: "contain",
+          backgroundColor: "#f5f5f5",
+        }}
+        source={item.imagePath}
+      />
+  )
+}
+
 
 function SeeMatchesButton({acceptedItems, navigation}) {
   const [ready , setReady] = useState(false);
