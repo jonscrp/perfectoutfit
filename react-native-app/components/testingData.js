@@ -1,8 +1,11 @@
-const jsonData  = require ("C:/Users/jsuco/OneDrive/Desktop/Hackathons/perfectoutfit/react-native-app/components/sampleCardsData.json");
+const dataItem  = require ("data.json");
+
+
+
 
 
 // // genders 2
-console.log(jsonData.data.length);
+console.log(dataItem.data);
 // console.log(jsonData.data[0].gender);
 // console.log(jsonData.data[1].gender);
 
@@ -14,7 +17,7 @@ console.log(jsonData.data.length);
 
 // console.log(jsonData.data[0].categories[0].images[0])
 
-
+/*
 
 console.log(dataItems());
 
@@ -60,3 +63,5 @@ function dataItems(){
     //}
 
 //}
+
+*/

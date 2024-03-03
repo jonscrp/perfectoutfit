@@ -1,4 +1,4 @@
-
+import jsonData from 'data.js'
 
 const sampleCardsData=[
     {
@@ -27,5 +27,5 @@ const sampleCardsData=[
   }
 
 export const clothingItemsData = [
-  ...sampleCardsData
+   return 
 ]

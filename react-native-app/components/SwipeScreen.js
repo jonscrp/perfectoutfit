@@ -7,10 +7,6 @@ import { useEffect, useState } from "react";
 import React from 'react'
 import { clothingItemsData } from "./clothingItemsData";
 
-
-import jsonData from "C:/Users/jsuco/OneDrive/Desktop/Hackathons/perfectoutfit/react-native-app/components/sampleCardsData.json";
-console.log(jsonData.data[0].categories);
-
 export default function SwipeScreen({ navigation }) {
   return (
     <View style={styles.container}>
@@ -20,16 +16,6 @@ export default function SwipeScreen({ navigation }) {
   );
 }
 
-<<<<<<< HEAD
-for (let i=1 ; i <= 10; i++) {
-  sampleCardsData.push({...sampleCardsData[0]})
-  sampleCardsData[i].id=i
-}
-
-function CardSwiper( {navigation} ) {
-
-  const cardsData = [...sampleCardsData];
-=======
 export function OutfitSwipeScreen({ route, navigation }) {
 
   const likedItems = route.params.likedItems;
@@ -58,7 +44,6 @@ export function MatchedOutfitsScreen({ route, navigation }) {
     </View>
   )
 }
->>>>>>> aa38ab5ee9a94d21969bad8bc4c886604ce0e93f
 
 
 function generateOutfitsFromLikedClothingItems(likedItems) {
