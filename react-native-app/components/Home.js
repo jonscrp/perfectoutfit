@@ -10,13 +10,21 @@ export default function Home({ navigation }) {
 
     <View style={styles.container}>
       <StatusBar style="auto" backgroundColor="#4FD0E9" />
-      <Text>Home</Text>
+      <Text style={styles.text}>Home</Text>
       <Text></Text>
+
       <TouchableOpacity
         style={styles.button}
         onPress={() => navigation.navigate("SwipeScreen")}
       >
-        <Text style={styles.buttonText}>Start</Text>
+        <Text style={styles.buttonText}>Start Male</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.navigate("SwipeScreen", {gender: "female"})}
+      >
+        <Text style={styles.buttonText}>Start Female</Text>
       </TouchableOpacity>
     </View>
   );

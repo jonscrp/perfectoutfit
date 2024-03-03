@@ -7,10 +7,17 @@ import { useEffect, useState } from "react";
 import React from 'react'
 import { clothingItemsData } from "./clothingItemsData";
 
-export default function SwipeScreen({ navigation }) {
+export default function SwipeScreen({ navigation, route }) {
+
+  const gender = route.params?.gender || "male";
+
+  const cardsData = clothingItemsData.filter( (item) => item.gender === gender).sort( () => 0.5 - Math.random() );
+  
+
+
   return (
     <View style={styles.container}>
-      <ItemsCardSwiper navigation={navigation}></ItemsCardSwiper>
+      <ItemsCardSwiper navigation={navigation} cardsData={cardsData}></ItemsCardSwiper>
       <StatusBar style="auto"/>
     </View>
   );
@@ -45,15 +52,46 @@ export function MatchedOutfitsScreen({ route, navigation }) {
   )
 }
 
+function isReadyForCreateOutfit(acceptedItems){
+  // accepted items contains  at least 2 tops and 2 bottoms
+
+  // console.log("acceptedItems", acceptedItems);
+  // console.log("a", acceptedItems.filter( (item) => item.category === "tops"));
+
+  return acceptedItems.filter( (item) => item.category === "tops").length >= 1 
+    && acceptedItems.filter( (item) => item.category === "bottoms").length >= 1
+    && acceptedItems.filter( (item) => item.category === "shoes").length >= 1;
+
+}
 
 function generateOutfitsFromLikedClothingItems(likedItems) {
-  return likedItems;
+  
+  const tops = likedItems.filter( (item) => item.category === "tops");
+  const bottoms = likedItems.filter( (item) => item.category === "bottoms");
+  const shoes = likedItems.filter( (item) => item.category === "shoes");
+  const accessories = likedItems.filter( (item) => item.category === "accessories");
+
+  
+  const out = []
+  for (const top of tops) {
+    for (const bottom of bottoms) {
+      for (const shoe of shoes) {
+        out.push([top, bottom, shoe]);
+        for (const accessory of accessories) {
+          out.push([top, bottom, shoe, accessory]);
+        }
+      }
+    }
+  }
+  
+
+  console.log(JSON.stringify(out, null, 2))
+  return out
 }
 
 
-function ItemsCardSwiper( {navigation} ) {
+function ItemsCardSwiper( {navigation, cardsData} ) {
 
-  const cardsData = clothingItemsData;
 
   return (
     <CardSwiper
@@ -155,14 +193,11 @@ function CardSwiper({cardsData, CardComponent, NextButtonComponent, navigation, 
       }}
       onSwipedLeft={(cardIndex) => {
         dislikedItems.push(cardsData[cardIndex]);
-        console.log("left", cardIndex);
       }}
       onSwipedRight={(cardIndex) => {
         setLikedItems([...likedItems, cardsData[cardIndex]]);
-        console.log("right", cardIndex);
       }}
       onSwiped={(cardIndex) => {
-        console.log(cardIndex);
       }}
       onSwipedAll={() => {
         console.log("onSwipedAll");
@@ -234,8 +269,8 @@ function ClothingItemCard({ card }) {
       }}>
         <Image
           style={{
-            width: "80%",
-            height: "80%",
+            width: "75%",
+            height: "75%",
             aspectRatio: 1,
             resizeMode: "contain",
           }}
@@ -254,7 +289,7 @@ function CreateOutfitsButton({acceptedItems, navigation}) {
   const [ready , setReady] = useState(false);
 
   useEffect(() => {
-    if (acceptedItems.length >= 3) {
+    if (isReadyForCreateOutfit(acceptedItems)) {
       setReady(true);
     }
   }, [acceptedItems.length])
@@ -334,13 +369,27 @@ function OutfitsCardSwiper({navigation, cardsData}) {
 }
 
 function OutfitCard( { card } ) {
+  console.log("Card", card);
   return (
     <View style={styles.card}>
       <View style={{
         alignItems: "center",
         justifyContent: "center",
+        flex: 1,
+        flexDirection: "column"
       }}>
-        <Text style={styles.text}>{card.displayText}</Text>
+        <Text style={styles.text}> Outfit: </Text>
+        {card.forEach((item) => {
+          <Image
+            style={{
+              width: "75%",
+              height: "75%",
+              aspectRatio: 1,
+              resizeMode: "contain",
+            }}
+            source={item.imagePath}
+          />
+        })}
       </View>
     </View> 
   );
