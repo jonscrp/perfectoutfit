@@ -498,7 +498,37 @@ const sampleCardsData=
     gender: 'female',
     category: 'tops',
     imagePath: require('../assets/scr/female/tops/female_tops_009.png') 
-  }
+  },
+  {
+    id: 83,
+    gender: 'female',
+    category: 'shoes',
+    imagePath: require('../assets/scr/male/shoes/male_shoes_001.png') 
+  },
+  {
+    id: 84,
+    gender: 'female',
+    category: 'shoes',
+    imagePath: require('../assets/scr/male/shoes/male_shoes_002.png') 
+  },
+  {
+    id: 85,
+    gender: 'female',
+    category: 'shoes',
+    imagePath: require('../assets/scr/male/shoes/male_shoes_003.png') 
+  },
+  {
+    id: 86,
+    gender: 'female',
+    category: 'shoes',
+    imagePath: require('../assets/scr/male/shoes/male_shoes_004.png') 
+  },
+  {
+    id: 87,
+    gender: 'female',
+    category: 'shoes',
+    imagePath: require('../assets/scr/male/shoes/male_shoes_005.png') 
+  },
 ]
  
   
